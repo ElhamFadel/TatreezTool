@@ -24,4 +24,5 @@ const _schema = i.schema({
 },
 
 );
+export default _schema;
 
