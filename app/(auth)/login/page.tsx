@@ -68,10 +68,6 @@ export default function LoginPage() {
                         className="border border-[#E5E7EB] rounded-xl px-4 py-2.5 text-sm text-[#1A1A1A] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#E85D75] focus:border-transparent"
                     />
                 </div>
-                <label className="flex items-center gap-2 text-sm text-[#6B7280] cursor-pointer">
-                    <input type="checkbox" className="accent-[#E85D75]" />
-                    Remember me
-                </label>
                 <button
                     onClick={handleSubmit}
                     disabled={loading}
