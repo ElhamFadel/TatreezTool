@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import db from '@/lib/db-client'
+import db from '@/lib/db'
 import { useAuthForm } from '@/hooks/useAuthForm'
 import AuthCard from '@/components/AuthCard'
 import AuthInput from '@/components/AuthInput'
