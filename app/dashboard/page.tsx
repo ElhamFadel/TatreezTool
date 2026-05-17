@@ -20,6 +20,7 @@ export default function DashboardPage() {
     const router = useRouter();
     const {
         handleNewDesign,
+        designs,
     } = useDashboard()
 
 
@@ -44,7 +45,12 @@ export default function DashboardPage() {
                                 <option>Oldest first</option>
                                 <option>A–Z</option>
                             </select>
-                            <NewDesignButton />
+                            <button
+                                onClick={handleNewDesign}
+                                className="bg-[#E85D75] hover:bg-[#D14D65] text-white text-sm font-medium px-4 py-1.5 rounded-lg transition-colors"
+                            >
+                                + New design
+                            </button>
                         </div>
                     </div>
 
@@ -53,20 +59,13 @@ export default function DashboardPage() {
                     ) : (
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
 
-                            <button
-                                onClick={handleNewDesign}
-                                className="bg-white border border-dashed border-[#E5E7EB] rounded-2xl p-4 flex flex-col items-center justify-center aspect-square hover:border-[#E85D75] hover:bg-[#FFF0F3] transition-all group"
-                            >
-                                <span className="text-2xl text-[#9CA3AF] group-hover:text-[#E85D75] transition-colors">+</span>
-                                <span className="text-xs text-[#9CA3AF] group-hover:text-[#E85D75] mt-1 transition-colors">New design</span>
-                            </button>
-
-                            {MOCK_DESIGNS.map((design) => (
+                            <NewDesignButton onClick={handleNewDesign} />
+                            {designs.map((design) => (
                                 <DesignCard
                                     key={design.id}
                                     id={design.id}
                                     designName={design.designName}
-                                    updatedAt={design.updatedAt}
+                                    updatedAt={design.updatedAt.toString()}
                                     onClick={() => router.push(`/design/${design.id}`)}
                                 />
                             ))}

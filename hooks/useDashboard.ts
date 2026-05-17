@@ -1,9 +1,9 @@
 import db from "@/lib/db";
 import { id } from "@instantdb/admin";
-import router from "next/router";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export function useDashboard() {
+    const router = useRouter();
     const { user } = db.useAuth();
     const { data, isLoading: dataLoading } = db.useQuery(
         user ? {
@@ -37,7 +37,13 @@ export function useDashboard() {
         router.push(`/design/${designId}`)
     }
 
+    const designs = (data?.desings ?? [])
+        .slice()
+        .sort((a, b) => b.updatedAt - a.updatedAt)
+
+
     return {
-        handleNewDesign
+        handleNewDesign,
+        designs
     }
 }
