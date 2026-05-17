@@ -5,6 +5,8 @@ import Sidebar from '@/components/dashboard/Sidebar'
 import DashboardHeader from '@/components/dashboard/DashboardHeader'
 import DesignCard from '@/components/dashboard/DesignCard'
 import EmptyState from '@/components/dashboard/EmptyState'
+import NewDesignButton from '@/components/NewDesignButton'
+import { useDashboard } from '@/hooks/useDashboard'
 
 const MOCK_DESIGNS = [
     { id: '1', designName: 'Thobe front panel', updatedAt: '2 hrs ago' },
@@ -15,11 +17,11 @@ const MOCK_DESIGNS = [
 ]
 
 export default function DashboardPage() {
-    const router = useRouter()
+    const router = useRouter();
+    const {
+        handleNewDesign,
+    } = useDashboard()
 
-    function handleNewDesign() {
-        router.push('/design/new')
-    }
 
     return (
         <div className="min-h-screen bg-[#F9F7F4] flex">
@@ -42,12 +44,7 @@ export default function DashboardPage() {
                                 <option>Oldest first</option>
                                 <option>A–Z</option>
                             </select>
-                            <button
-                                onClick={handleNewDesign}
-                                className="bg-[#E85D75] hover:bg-[#D14D65] text-white text-sm font-medium px-4 py-1.5 rounded-lg transition-colors"
-                            >
-                                + New design
-                            </button>
+                            <NewDesignButton />
                         </div>
                     </div>
 
