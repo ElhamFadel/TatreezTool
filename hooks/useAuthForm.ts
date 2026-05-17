@@ -1,6 +1,3 @@
-'use client'
-
-import { isValidEmail, isValidPassword } from '@/lib/validation'
 import { useState } from 'react'
 
 export function useAuthForm() {
@@ -10,54 +7,48 @@ export function useAuthForm() {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
 
-    const clearError = () => setError('')
-
-    function validateEmail(): boolean {
-        if (!email) {
-            setError('Email is required')
-            return false
-        }
-        if (!isValidEmail(email)) {
-            setError('Please enter a valid email address')
-            return false
-        }
-        return true
+    function clearError() {
+        setError('')
     }
 
-    function validatePassword(): boolean {
-        if (!password) {
-            setError('Password is required')
+    function validate(): boolean {
+        if (!email || !password) {
+            setError('Email and password are required')
             return false
         }
-        if (!isValidPassword(password)) {
+        if (password.length < 8) {
             setError('Password must be at least 8 characters')
             return false
         }
         return true
     }
 
-    function validateConfirmPassword(): boolean {
-        if (!confirmPassword) {
-            setError('Please confirm your password')
-            return false
-        }
-        if (!passwordsMatch(password, confirmPassword)) {
-            setError('Passwords do not match')
+    function validateEmail(): boolean {
+        if (!email) {
+            setError('Email is required')
             return false
         }
         return true
     }
 
-    function validateLogin(): boolean {
-        return validateEmail() && validatePassword()
-    }
-
-    function validateSignup(): boolean {
-        return validateEmail() && validatePassword()
-    }
-
-    function validateReset(): boolean {
-        return validatePassword() && validateConfirmPassword()
+    function validateReset(code: string): boolean {
+        if (!code) {
+            setError('Please enter the verification code')
+            return false
+        }
+        if (!password) {
+            setError('Please enter a new password')
+            return false
+        }
+        if (password.length < 8) {
+            setError('Password must be at least 8 characters')
+            return false
+        }
+        if (password !== confirmPassword) {
+            setError('Passwords do not match')
+            return false
+        }
+        return true
     }
 
     return {
@@ -66,9 +57,8 @@ export function useAuthForm() {
         confirmPassword, setConfirmPassword,
         error, setError, clearError,
         loading, setLoading,
+        validate,
         validateEmail,
-        validateLogin,
-        validateSignup,
         validateReset,
     }
 }
