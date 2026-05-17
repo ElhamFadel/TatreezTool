@@ -1,4 +1,4 @@
-import db from "@/lib/db";
+import adminDB from "@/lib/admin";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 
@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     const normalizedEmail = email.toLowerCase().trim();
 
     try {
-        const { profiles } = await db.query({
+        const { profiles } = await adminDB.query({
             profiles: { $: { where: { email: normalizedEmail } } },
         });
 
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        const token = await db.auth.createToken(normalizedEmail);
+        const token = await adminDB.auth.createToken(normalizedEmail);
         return NextResponse.json({ token, communityMember: profile.communityMember }, { status: 200 });
     } catch (err) {
         console.error(err);

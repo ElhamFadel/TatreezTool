@@ -1,4 +1,4 @@
-import db from "@/lib/db";
+import adminDB from "@/lib/admin";
 import { id } from "@instantdb/admin";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt"
@@ -15,14 +15,14 @@ export async function POST(req: NextRequest) {
 
     try {
 
-        const token = await db.auth.createToken(normalizedEmail);
+        const token = await adminDB.auth.createToken(normalizedEmail);
         const passwordHash = await bcrypt.hash(password, 10);
         const communityMember = COMMUNITY_EMAILS.includes(normalizedEmail);
 
-        const user = await db.auth.getUser({ email: normalizedEmail });
+        const user = await adminDB.auth.getUser({ email: normalizedEmail });
 
-        await db.transact(
-            db.tx.profiles[id()].update({
+        await adminDB.transact(
+            adminDB.tx.profiles[id()].update({
                 userId: user.id,
                 email: normalizedEmail,
                 passwordHash,
