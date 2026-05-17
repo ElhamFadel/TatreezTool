@@ -1,25 +1,27 @@
-import type { KeyboardEvent } from 'react'
-
-interface AuthInputProps {
+interface Props {
     label: string
     type: string
     value: string
     onChange: (value: string) => void
     placeholder: string
-    onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void
+    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
-export default function AuthInput({ label, type, value, onChange, placeholder, onKeyDown }: AuthInputProps) {
+export default function AuthInput({
+    label, type, value, onChange, placeholder, onKeyDown
+}: Props) {
     return (
-        <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-[#1A1A1A]">{label}</label>
+        <div>
+            <label className="block text-sm font-medium text-[#1A1A1A] mb-1.5">
+                {label}
+            </label>
             <input
                 type={type}
                 value={value}
-                onChange={e => onChange(e.target.value)}
-                placeholder={placeholder}
+                onChange={(e) => onChange(e.target.value)}
                 onKeyDown={onKeyDown}
-                className="border border-[#E5E7EB] rounded-xl px-4 py-2.5 text-sm text-[#1A1A1A] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#E85D75] focus:border-transparent"
+                placeholder={placeholder}
+                className="w-full border border-[#E5E7EB] rounded-xl px-4 py-2.5 text-sm text-[#1A1A1A] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#E85D75] focus:border-transparent transition-all"
             />
         </div>
     )
