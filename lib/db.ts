@@ -1,10 +1,9 @@
 import { init } from '@instantdb/admin'
-import _schema from './schema'
+import { instantConfig } from './config'
 
 const adminDb = init({
-    appId: process.env.NEXT_PUBLIC_INSTANT_APP_ID ?? '',
+    ...instantConfig,
     adminToken: process.env.INSTANT_ADMIN_TOKEN ?? '',
-    schema: _schema,
 })
 
 export default adminDb
