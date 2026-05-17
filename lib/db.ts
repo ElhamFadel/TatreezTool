@@ -1,11 +1,10 @@
-import { init } from '@instantdb/react';
+import { init } from '@instantdb/admin'
+import _schema from './schema'
 
-const APP_ID = process.env.NEXT_PUBLIC_INSTANT_APP_ID!
+const adminDb = init({
+    appId: process.env.NEXT_PUBLIC_INSTANT_APP_ID ?? '',
+    adminToken: process.env.INSTANT_ADMIN_TOKEN ?? '',
+    schema: _schema,
+})
 
-if (!APP_ID) {
-    throw new Error('Misding APP_ID enviroment variable')
-}
-
-const db = init({ appId: APP_ID })
-
-export default db;
+export default adminDb
