@@ -46,10 +46,9 @@ export async function POST(req: NextRequest) {
             })
         );
 
-        return NextResponse.json({ token }, { status: 201 });
-    } catch (err) {
-        console.error(err);
-        return NextResponse.json({ error: 'Signup failed' }, { status: 500 });
+    return NextResponse.json({ token, communityMember }, { status: 201 })
+  } catch {
+    return NextResponse.json({ error: 'Signup failed' }, { status: 500 })
     }
 
 }
