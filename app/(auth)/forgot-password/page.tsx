@@ -2,28 +2,30 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import db from '@/lib/db'
+import { useAuthForm } from '@/hooks/useAuthForm'
 import AuthCard from '@/components/AuthCard'
 import AuthInput from '@/components/AuthInput'
 import AuthError from '@/components/AuthError'
 
-export default function ForgotPasswordPage() {
-    const [email, setEmail] = useState('')
-    const [error, setError] = useState('')
-    const [loading, setLoading] = useState(false)
-    const [submitted, setSubmitted] = useState(false)
+type Step = 'email' | 'reset' | 'success'
 
-    const handleSubmit = async () => {
-        if (!email) {
-            setError('Email is required.')
-            return
-        }
-        setLoading(true)
-        setError('')
+export default function ForgotPasswordPage() {
+    const router = useRouter()
+    const form = useAuthForm()
+    const [step, setStep] = useState<Step>('email')
+    const [code, setCode] = useState('')
+
+    async function handleSendCode() {
+        if (!form.validateEmail()) return
+        form.setLoading(true)
+        form.clearError()
         try {
             await fetch('/api/auth/forgot-password', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ email: form.email.toLowerCase().trim() }),
             })
             setSubmitted(true)
         } catch {
