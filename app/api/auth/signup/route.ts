@@ -11,18 +11,6 @@ const COMMUNITY_EMAILS = [
 
 export async function POST(req: NextRequest) {
     const { email, password } = await req.json();
-    if (!email || !password) {
-        return NextResponse.json({
-            error: 'Both Email and Password Required!!'
-        },
-            { status: 400 }
-        )
-    }
-    if (password.length < 8) {
-        return NextResponse.json(
-            { error: 'Password must be at least 8 characters' },
-            { status: 400 })
-    }
     const normalizedEmail = email.toLowerCase().trim();
 
     try {
