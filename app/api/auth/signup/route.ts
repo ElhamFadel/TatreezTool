@@ -4,9 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt"
 
 const COMMUNITY_EMAILS = [
-    'member2@test.com',
-    'vip@tilted.com',
-    'member1@test.com'
+  'member2@test.com',
+  'vip@tilted.com',
+  'member1@test.com'
 ]
 
 export async function POST(req: NextRequest) {
@@ -36,19 +36,19 @@ export async function POST(req: NextRequest) {
     const token = await adminDB.auth.createToken(normalizedEmail)
     const user = await adminDB.auth.getUser({ email: normalizedEmail })
 
-        await adminDB.transact(
-            adminDB.tx.profiles[id()].update({
-                userId: user.id,
-                email: normalizedEmail,
-                passwordHash,
-                communityMember,
-                createdAt: Date.now(),
-            })
-        );
+    await adminDB.transact(
+      adminDB.tx.profiles[id()].update({
+        userId: user.id,
+        email: normalizedEmail,
+        passwordHash,
+        communityMember,
+        createdAt: Date.now(),
+      })
+    );
 
     return NextResponse.json({ token, communityMember }, { status: 201 })
   } catch {
     return NextResponse.json({ error: 'Signup failed' }, { status: 500 })
-    }
+  }
 
 }
