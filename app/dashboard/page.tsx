@@ -16,6 +16,8 @@ export default function DashboardPage() {
         designs,
         sortBy,
         setSortBy,
+        communityMember,
+        userInitial,
     } = useDashboard()
 
 
@@ -26,7 +28,7 @@ export default function DashboardPage() {
 
             <div className="ml-52 flex-1 flex flex-col">
 
-                <DashboardHeader userInitial="E" />
+                <DashboardHeader userInitial={userInitial} communityMember={communityMember} />
 
                 <main className="px-8 py-8">
 

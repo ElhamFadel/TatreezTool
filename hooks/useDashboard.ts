@@ -11,16 +11,14 @@ export function useDashboard() {
     const [sortBy, setSortBy] = useState<SortOption>('recent')
     const { data } = db.useQuery(
         user ? {
-            desings: {
-                $: {
-                    where: {
-                        userId: user.id,
-                        isDeleted: false
-                    }
-                }
-            }
+            desings: { $: { where: { userId: user.id, isDeleted: false } } },
+            profiles: { $: { where: { userId: user.id } } },
         } : null
     );
+
+    const profile = data?.profiles?.[0] ?? null
+    const communityMember = profile?.communityMember ?? false
+    const userInitial = user?.email?.[0]?.toUpperCase() ?? '?'
     async function handleNewDesign() {
         if (!user) return
         const designId = id();
@@ -53,5 +51,7 @@ export function useDashboard() {
         designs,
         sortBy,
         setSortBy,
+        communityMember,
+        userInitial,
     }
 }
