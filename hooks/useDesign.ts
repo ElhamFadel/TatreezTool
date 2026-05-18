@@ -12,11 +12,18 @@ export function useDesign(designId: string) {
   const clearStatusRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const initializedRef = useRef(false)
 
+  const { user } = db.useAuth()
+
   const { data, isLoading: queryLoading } = db.useQuery({
     desings: { $: { where: { id: designId } } },
   })
 
   const design = data?.desings?.[0] ?? null
+
+  useEffect(() => {
+    if (queryLoading) return
+    if (!design || design.userId !== user?.id) router.push('/dashboard')
+  }, [design, queryLoading, user?.id, router])
 
   useEffect(() => {
     if (design && !initializedRef.current) {
