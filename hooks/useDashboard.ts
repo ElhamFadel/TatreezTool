@@ -1,11 +1,15 @@
 import db from "@/lib/db";
 import { id } from "@instantdb/admin";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+type SortOption = 'recent' | 'oldest' | 'az'
 
 export function useDashboard() {
     const router = useRouter();
     const { user } = db.useAuth();
-    const { data, isLoading: dataLoading } = db.useQuery(
+    const [sortBy, setSortBy] = useState<SortOption>('recent')
+    const { data } = db.useQuery(
         user ? {
             desings: {
                 $: {
@@ -37,13 +41,17 @@ export function useDashboard() {
         router.push(`/design/${designId}`)
     }
 
-    const designs = (data?.desings ?? [])
-        .slice()
-        .sort((a, b) => b.updatedAt - a.updatedAt)
+    const designs = (data?.desings ?? []).slice().sort((a, b) => {
+        if (sortBy === 'oldest') return a.updatedAt - b.updatedAt
+        if (sortBy === 'az') return a.designName.localeCompare(b.designName)
+        return b.updatedAt - a.updatedAt
+    })
 
 
     return {
         handleNewDesign,
-        designs
+        designs,
+        sortBy,
+        setSortBy,
     }
 }

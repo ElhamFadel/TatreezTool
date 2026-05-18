@@ -14,6 +14,8 @@ export default function DashboardPage() {
     const {
         handleNewDesign,
         designs,
+        sortBy,
+        setSortBy,
     } = useDashboard()
 
 
@@ -33,10 +35,11 @@ export default function DashboardPage() {
                             My designs
                         </h1>
                         <div className="flex items-center gap-3">
-                            <select className="text-sm text-[#6B7280] border border-[#E5E7EB] rounded-lg px-3 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-[#E85D75]">
-                                <option>Recently opened</option>
-                                <option>Oldest first</option>
-                                <option>A–Z</option>
+                            <select value={sortBy}
+                                onChange={(e) => setSortBy(e.target.value as 'recent' | 'oldest' | 'az')} className="text-sm text-[#6B7280] border border-[#E5E7EB] rounded-lg px-3 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-[#E85D75]">
+                                <option value="recent">Recently modified</option>
+                                <option value="oldest">Oldest first</option>
+                                <option value="az">A–Z</option>
                             </select>
                             <button
                                 onClick={handleNewDesign}
