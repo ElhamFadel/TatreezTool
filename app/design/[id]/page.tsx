@@ -5,7 +5,7 @@ import { useDesign } from '@/hooks/useDesign'
 
 export default function DesignPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
-  const { design, name, saveStatus, queryLoading, handleNameChange, handleGoHome } = useDesign(id)
+  const { design, name, saveStatus, handleNameChange, handleGoHome } = useDesign(id)
   const [isEditing, setIsEditing] = useState(false)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
