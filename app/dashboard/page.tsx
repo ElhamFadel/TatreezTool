@@ -8,13 +8,6 @@ import EmptyState from '@/components/dashboard/EmptyState'
 import NewDesignButton from '@/components/NewDesignButton'
 import { useDashboard } from '@/hooks/useDashboard'
 
-const MOCK_DESIGNS = [
-    { id: '1', designName: 'Thobe front panel', updatedAt: '2 hrs ago' },
-    { id: '2', designName: 'Sleeve border', updatedAt: 'Yesterday' },
-    { id: '3', designName: 'Pillow cushion v2', updatedAt: '3 days ago' },
-    { id: '4', designName: 'Geometric border', updatedAt: '1 week ago' },
-    { id: '5', designName: 'Ain al-shams motif', updatedAt: '2 weeks ago' },
-]
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -54,7 +47,7 @@ export default function DashboardPage() {
                         </div>
                     </div>
 
-                    {MOCK_DESIGNS.length === 0 ? (
+                    {designs.length === 0 ? (
                         <EmptyState onNewDesign={handleNewDesign} />
                     ) : (
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
