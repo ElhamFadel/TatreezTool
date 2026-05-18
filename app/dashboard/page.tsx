@@ -7,7 +7,7 @@ import DesignCard from '@/components/dashboard/DesignCard'
 import EmptyState from '@/components/dashboard/EmptyState'
 import NewDesignButton from '@/components/NewDesignButton'
 import { useDashboard } from '@/hooks/useDashboard'
-
+import { formatDate } from '@/lib/formatDate'
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -61,7 +61,7 @@ export default function DashboardPage() {
                                     key={design.id}
                                     id={design.id}
                                     designName={design.designName}
-                                    updatedAt={design.updatedAt.toString()}
+                                    updatedAt={formatDate(design.updatedAt)}
                                     onClick={() => router.push(`/design/${design.id}`)}
                                 />
                             ))}
