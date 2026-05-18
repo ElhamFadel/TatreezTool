@@ -10,20 +10,13 @@ export default function DesignPage({ params }: { params: Promise<{ id: string }>
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
+    if (saveStatus === 'idle') return
     function handleMouseMove(e: MouseEvent) {
       setMousePos({ x: e.clientX, y: e.clientY })
     }
     window.addEventListener('mousemove', handleMouseMove)
     return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
-  if (queryLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[#F9F7F4]">
-        <div className="w-8 h-8 border-4 border-[#E85D75] border-t-transparent rounded-full animate-spin" />
-      </div>
-    )
-  }
+  }, [saveStatus])
 
   if (!design) return null
 
