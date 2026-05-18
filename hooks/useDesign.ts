@@ -62,5 +62,5 @@ export function useDesign(designId: string) {
     router.push('/dashboard')
   }
 
-  return { design, name, saveStatus, handleNameChange, handleGoHome }
+  return { design, queryLoading, name, saveStatus, handleNameChange, handleGoHome }
 }
