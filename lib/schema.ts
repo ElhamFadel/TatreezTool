@@ -18,6 +18,7 @@ const _schema = i.schema({
             isDeleted: i.boolean(),
             deletedAt: i.number().optional(),
             isShared: i.boolean(),
+            collaborators: i.json().optional(),
         }),
 
     }
