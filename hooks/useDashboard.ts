@@ -39,6 +39,22 @@ export function useDashboard() {
         router.push(`/design/${designId}`)
     }
 
+    async function handleDuplicate(design: typeof designs[number]) {
+        if (!user) return
+        const newId = id()
+        await db.transact(
+            db.tx.desings[newId].update({
+                userId: user.id,
+                designName: `${design.designName} — Copy`,
+                designData: design.designData ?? {},
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+                isDeleted: false,
+                isShared: false,
+            })
+        )
+    }
+
     const designs = (data?.desings ?? []).slice().sort((a, b) => {
         if (sortBy === 'oldest') return a.updatedAt - b.updatedAt
         if (sortBy === 'az') return a.designName.localeCompare(b.designName)
@@ -48,6 +64,7 @@ export function useDashboard() {
 
     return {
         handleNewDesign,
+        handleDuplicate,
         designs,
         sortBy,
         setSortBy,
