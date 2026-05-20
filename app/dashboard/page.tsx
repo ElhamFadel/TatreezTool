@@ -14,6 +14,7 @@ export default function DashboardPage() {
     const {
         handleNewDesign,
         handleDuplicate,
+        handleRenameDesign,
         designs,
         sortBy,
         setSortBy,
@@ -67,6 +68,7 @@ export default function DashboardPage() {
                                     updatedAt={formatDate(design.updatedAt)}
                                     onClick={() => router.push(`/design/${design.id}`)}
                                     onDuplicate={() => handleDuplicate(design)}
+                                    onRename={(newName) => handleRenameDesign(design.id, newName, design.designName)}
                                 />
                             ))}
 

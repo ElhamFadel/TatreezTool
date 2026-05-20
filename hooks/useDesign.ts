@@ -47,6 +47,11 @@ export function useDesign(designId: string) {
         return
       }
 
+      if (value.trim() === design.designName.trim()) {
+        setSaveStatus('idle')
+        return
+      }
+
       try {
         await db.transact(
           db.tx.desings[designId].update({
