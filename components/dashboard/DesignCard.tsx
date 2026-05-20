@@ -56,12 +56,12 @@ export default function DesignCard({ designName, updatedAt, onClick, onDuplicate
                     />
                 ) : (
                     <p
-                        onDoubleClick={(e) => {
+                        onClick={(e) => {
                             e.stopPropagation()
                             setRenameValue(designName)
                             setIsRenaming(true)
                         }}
-                        className="text-xs font-medium text-[#1A1A1A] truncate"
+                        className="text-xs font-medium text-[#1A1A1A] truncate cursor-text"
                     >
                         {designName}
                     </p>
