@@ -9,9 +9,10 @@ interface Props {
     onClick: () => void
     onDuplicate: () => void
     onRename: (newName: string) => void
+    onDelete: () => void
 }
 
-export default function DesignCard({ designName, updatedAt, onClick, onDuplicate, onRename }: Props) {
+export default function DesignCard({ designName, updatedAt, onClick, onDuplicate, onRename, onDelete }: Props) {
     const [menuOpen, setMenuOpen] = useState(false)
     const [isRenaming, setIsRenaming] = useState(false)
     const [renameValue, setRenameValue] = useState(designName)
@@ -101,6 +102,16 @@ export default function DesignCard({ designName, updatedAt, onClick, onDuplicate
                             className="w-full text-left text-xs text-[#1A1A1A] px-3 py-2 hover:bg-[#F9F7F4] transition-colors"
                         >
                             Duplicate
+                        </button>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation()
+                                onDelete()
+                                setMenuOpen(false)
+                            }}
+                            className="w-full text-left text-xs text-[#E85D75] px-3 py-2 hover:bg-[#FFF0F3] transition-colors"
+                        >
+                            Delete
                         </button>
                     </div>
                 )}

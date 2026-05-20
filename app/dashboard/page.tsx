@@ -13,6 +13,7 @@ export default function DashboardPage() {
     const router = useRouter();
     const {
         handleNewDesign,
+        handleDeleteDesign,
         handleDuplicate,
         handleRenameDesign,
         designs,
@@ -69,6 +70,7 @@ export default function DashboardPage() {
                                     onClick={() => router.push(`/design/${design.id}`)}
                                     onDuplicate={() => handleDuplicate(design)}
                                     onRename={(newName) => handleRenameDesign(design.id, newName, design.designName)}
+                                    onDelete={() => handleDeleteDesign(design.id)}
                                 />
                             ))}
 

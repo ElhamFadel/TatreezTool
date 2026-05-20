@@ -47,6 +47,12 @@ export function useDashboard() {
         )
     }
 
+    async function handleDeleteDesign(designId: string) {
+        await db.transact(
+            db.tx.desings[designId].update({ isDeleted: true, deletedAt: Date.now() })
+        )
+    }
+
     async function handleDuplicate(design: typeof designs[number]) {
         if (!user) return
         const newId = id()
@@ -72,6 +78,7 @@ export function useDashboard() {
 
     return {
         handleNewDesign,
+        handleDeleteDesign,
         handleDuplicate,
         handleRenameDesign,
         designs,

@@ -28,6 +28,18 @@ export default function Sidebar() {
                             soon
                         </span>
                     </div>
+                    <Link
+                        href="/trash"
+                        className="flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-[#9CA3AF] hover:bg-[#F9F7F4] hover:text-[#1A1A1A] text-sm transition-colors"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="3 6 5 6 21 6" />
+                            <path d="M19 6l-1 14H6L5 6" />
+                            <path d="M10 11v6M14 11v6" />
+                            <path d="M9 6V4h6v2" />
+                        </svg>
+                        Trash
+                    </Link>
                 </nav>
             </div>
         </aside>
