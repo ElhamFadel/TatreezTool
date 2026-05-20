@@ -39,6 +39,14 @@ export function useDashboard() {
         router.push(`/design/${designId}`)
     }
 
+    async function handleRenameDesign(designId: string, newName: string, originalName: string) {
+        const trimmed = newName.trim()
+        if (trimmed === '' || trimmed === originalName.trim()) return
+        await db.transact(
+            db.tx.desings[designId].update({ designName: trimmed, updatedAt: Date.now() })
+        )
+    }
+
     async function handleDuplicate(design: typeof designs[number]) {
         if (!user) return
         const newId = id()
@@ -65,6 +73,7 @@ export function useDashboard() {
     return {
         handleNewDesign,
         handleDuplicate,
+        handleRenameDesign,
         designs,
         sortBy,
         setSortBy,
