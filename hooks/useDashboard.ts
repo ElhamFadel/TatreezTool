@@ -78,6 +78,7 @@ export function useDashboard() {
 
     return {
         handleNewDesign,
+        handleDeleteDesign,
         handleDuplicate,
         handleRenameDesign,
         designs,
