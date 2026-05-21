@@ -14,6 +14,7 @@ export default function DashboardPage() {
     const {
         handleNewDesign,
         handleDeleteDesign,
+        handleShareDesign,
         handleDuplicate,
         handleRenameDesign,
         designs,
@@ -68,9 +69,11 @@ export default function DashboardPage() {
                                     designName={design.designName}
                                     updatedAt={formatDate(design.updatedAt)}
                                     onClick={() => router.push(`/design/${design.id}`)}
+                                    isShared={design.isShared ?? false}
                                     onDuplicate={() => handleDuplicate(design)}
                                     onRename={(newName) => handleRenameDesign(design.id, newName, design.designName)}
                                     onDelete={() => handleDeleteDesign(design.id)}
+                                    onShare={() => handleShareDesign(design.id, design.isShared ?? false)}
                                 />
                             ))}
 
