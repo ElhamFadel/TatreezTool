@@ -1,6 +1,7 @@
 'use client'
 
 import DashboardShell from '@/components/dashboard/DashboardShell'
+import { IconTrash } from '@/components/icons'
 import { useTrash } from '@/hooks/useTrash'
 import { useProfile } from '@/hooks/useProfile'
 import { formatDate } from '@/lib/formatDate'
@@ -19,12 +20,7 @@ export default function TrashPage() {
 
                     {trashedDesigns.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-24 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
-                                <polyline points="3 6 5 6 21 6" />
-                                <path d="M19 6l-1 14H6L5 6" />
-                                <path d="M10 11v6M14 11v6" />
-                                <path d="M9 6V4h6v2" />
-                            </svg>
+                            <IconTrash className="w-10 h-10 text-[#D1D5DB] mb-4" />
                             <p className="text-sm text-[#9CA3AF]">Trash is empty</p>
                         </div>
                     ) : (
