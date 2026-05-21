@@ -2,6 +2,25 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+function MenuItem({ label, onClick, variant = 'default' }: {
+    label: string
+    onClick: () => void
+    variant?: 'default' | 'danger'
+}) {
+    return (
+        <button
+            onClick={(e) => { e.stopPropagation(); onClick() }}
+            className={`w-full text-left text-xs px-3 py-2 transition-colors ${
+                variant === 'danger'
+                    ? 'text-[#E85D75] hover:bg-[#FFF0F3]'
+                    : 'text-[#1A1A1A] hover:bg-[#F9F7F4]'
+            }`}
+        >
+            {label}
+        </button>
+    )
+}
+
 interface Props {
     id: string
     designName: string
@@ -14,11 +33,19 @@ interface Props {
     onShare: () => void
 }
 
-export default function DesignCard({ designName, updatedAt, isShared, onClick, onDuplicate, onRename, onDelete, onShare }: Props) {
+export default function DesignCard({ id, designName, updatedAt, isShared, onClick, onDuplicate, onRename, onDelete, onShare }: Props) {
     const [menuOpen, setMenuOpen] = useState(false)
     const [isRenaming, setIsRenaming] = useState(false)
     const [renameValue, setRenameValue] = useState(designName)
+    const [linkCopied, setLinkCopied] = useState(false)
     const menuRef = useRef<HTMLDivElement>(null)
+
+    function handleCopyLink() {
+        navigator.clipboard.writeText(`${window.location.origin}/share/${id}`)
+        setLinkCopied(true)
+        setMenuOpen(false)
+        setTimeout(() => setLinkCopied(false), 2000)
+    }
 
     useEffect(() => {
         if (!menuOpen) return
@@ -38,6 +65,11 @@ export default function DesignCard({ designName, updatedAt, isShared, onClick, o
 
     return (
         <div className="relative group">
+            {linkCopied && (
+                <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#1A1A1A] text-white text-[10px] px-2.5 py-1 rounded-lg whitespace-nowrap z-20">
+                    Link copied!
+                </div>
+            )}
             <button
                 onClick={onClick}
                 className="w-full bg-white border border-[#E5E7EB] rounded-2xl p-3 text-left hover:shadow-md hover:border-[#E85D75] transition-all"
@@ -89,47 +121,13 @@ export default function DesignCard({ designName, updatedAt, isShared, onClick, o
                 </button>
                 {menuOpen && (
                     <div className="absolute right-0 top-7 bg-white border border-[#E5E7EB] rounded-xl shadow-md py-1 w-36 z-10">
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                setRenameValue(designName)
-                                setIsRenaming(true)
-                                setMenuOpen(false)
-                            }}
-                            className="w-full text-left text-xs text-[#1A1A1A] px-3 py-2 hover:bg-[#F9F7F4] transition-colors"
-                        >
-                            Rename
-                        </button>
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                onDuplicate()
-                                setMenuOpen(false)
-                            }}
-                            className="w-full text-left text-xs text-[#1A1A1A] px-3 py-2 hover:bg-[#F9F7F4] transition-colors"
-                        >
-                            Duplicate
-                        </button>
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                onShare()
-                                setMenuOpen(false)
-                            }}
-                            className="w-full text-left text-xs text-[#1A1A1A] px-3 py-2 hover:bg-[#F9F7F4] transition-colors"
-                        >
-                            {isShared ? 'Make private' : 'Share'}
-                        </button>
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                onDelete()
-                                setMenuOpen(false)
-                            }}
-                            className="w-full text-left text-xs text-[#E85D75] px-3 py-2 hover:bg-[#FFF0F3] transition-colors"
-                        >
-                            Delete
-                        </button>
+                        <MenuItem label="Rename" onClick={() => { setRenameValue(designName); setIsRenaming(true); setMenuOpen(false) }} />
+                        <MenuItem label="Duplicate" onClick={() => { onDuplicate(); setMenuOpen(false) }} />
+                        <MenuItem label={isShared ? 'Make private' : 'Share'} onClick={() => { onShare(); setMenuOpen(false) }} />
+                        {isShared && (
+                            <MenuItem label="Copy link" onClick={handleCopyLink} />
+                        )}
+                        <MenuItem label="Delete" onClick={() => { onDelete(); setMenuOpen(false) }} variant="danger" />
                     </div>
                 )}
             </div>
