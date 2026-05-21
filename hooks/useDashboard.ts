@@ -53,6 +53,12 @@ export function useDashboard() {
         )
     }
 
+    async function handleShareDesign(designId: string, currentValue: boolean) {
+        await db.transact(
+            db.tx.desings[designId].update({ isShared: !currentValue })
+        )
+    }
+
     async function handleDuplicate(design: typeof designs[number]) {
         if (!user) return
         const newId = id()
@@ -79,6 +85,7 @@ export function useDashboard() {
     return {
         handleNewDesign,
         handleDeleteDesign,
+        handleShareDesign,
         handleDuplicate,
         handleRenameDesign,
         designs,
