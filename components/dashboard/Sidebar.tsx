@@ -1,7 +1,14 @@
 'use client'
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { ReactNode } from 'react'
+import { IconCommunity, IconTrash } from '@/components/icons'
+
+const NAV_ITEMS: { href: string; label: string; icon: ReactNode }[] = [
+    { href: '/dashboard', label: 'My designs', icon: <span>👘</span> },
+    { href: '/community', label: 'Community', icon: <IconCommunity /> },
+]
 
 export default function Sidebar() {
     const pathname = usePathname()
@@ -28,16 +35,12 @@ export default function Sidebar() {
                     Workspace
                 </p>
                 <nav className="flex flex-col gap-0.5">
-                    <Link href="/dashboard" className={navClass('/dashboard')}>
-                        <span>👘</span> My designs
-                    </Link>
-                    <Link href="/community" className={navClass('/community')}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="12" cy="8" r="4" />
-                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-                        </svg>
-                        Community
-                    </Link>
+                    {NAV_ITEMS.map(({ href, label, icon }) => (
+                        <Link key={href} href={href} className={navClass(href)}>
+                            {icon}
+                            {label}
+                        </Link>
+                    ))}
                     <div className="flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-[#9CA3AF] text-sm">
                         Templates
                         <span className="ml-auto text-[10px] bg-[#F3F4F6] text-[#9CA3AF] px-1.5 py-0.5 rounded">
@@ -45,12 +48,7 @@ export default function Sidebar() {
                         </span>
                     </div>
                     <Link href="/trash" className={navClass('/trash')}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6l-1 14H6L5 6" />
-                            <path d="M10 11v6M14 11v6" />
-                            <path d="M9 6V4h6v2" />
-                        </svg>
+                        <IconTrash />
                         Trash
                     </Link>
                 </nav>
