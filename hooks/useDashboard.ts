@@ -3,6 +3,7 @@ import { id } from "@instantdb/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { duplicateDesign } from "@/lib/duplicateDesign";
+import { useProfile } from "@/hooks/useProfile";
 
 type SortOption = 'recent' | 'oldest' | 'az'
 
@@ -10,16 +11,12 @@ export function useDashboard() {
     const router = useRouter();
     const { user } = db.useAuth();
     const [sortBy, setSortBy] = useState<SortOption>('recent')
+    const { communityMember, userInitial } = useProfile()
     const { data } = db.useQuery(
         user ? {
             desings: { $: { where: { userId: user.id, isDeleted: false } } },
-            profiles: { $: { where: { userId: user.id } } },
         } : null
     );
-
-    const profile = data?.profiles?.[0] ?? null
-    const communityMember = profile?.communityMember ?? false
-    const userInitial = user?.email?.[0]?.toUpperCase() ?? '?'
     async function handleNewDesign() {
         if (!user) return
         const designId = id();

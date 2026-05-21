@@ -1,25 +1,17 @@
 'use client'
 
-import Sidebar from '@/components/dashboard/Sidebar'
-import DashboardHeader from '@/components/dashboard/DashboardHeader'
+import DashboardShell from '@/components/dashboard/DashboardShell'
+import { IconTrash } from '@/components/icons'
 import { useTrash } from '@/hooks/useTrash'
-import { useDashboard } from '@/hooks/useDashboard'
+import { useProfile } from '@/hooks/useProfile'
 import { formatDate } from '@/lib/formatDate'
 
 export default function TrashPage() {
     const { trashedDesigns, handleRestore, handlePermanentDelete } = useTrash()
-    const { communityMember, userInitial } = useDashboard()
+    const { communityMember, userInitial } = useProfile()
 
     return (
-        <div className="min-h-screen bg-[#F9F7F4] flex">
-
-            <Sidebar />
-
-            <div className="ml-52 flex-1 flex flex-col">
-
-                <DashboardHeader userInitial={userInitial} communityMember={communityMember} />
-
-                <main className="px-8 py-8">
+        <DashboardShell userInitial={userInitial} communityMember={communityMember}>
 
                     <h1 className="text-lg font-semibold text-[#1A1A1A] mb-1">Trash</h1>
                     <p className="text-xs text-[#9CA3AF] mb-6">
@@ -28,12 +20,7 @@ export default function TrashPage() {
 
                     {trashedDesigns.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-24 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
-                                <polyline points="3 6 5 6 21 6" />
-                                <path d="M19 6l-1 14H6L5 6" />
-                                <path d="M10 11v6M14 11v6" />
-                                <path d="M9 6V4h6v2" />
-                            </svg>
+                            <IconTrash className="w-10 h-10 text-[#D1D5DB] mb-4" />
                             <p className="text-sm text-[#9CA3AF]">Trash is empty</p>
                         </div>
                     ) : (
@@ -68,10 +55,6 @@ export default function TrashPage() {
                         </div>
                     )}
 
-                </main>
-
-            </div>
-
-        </div>
+        </DashboardShell>
     )
 }

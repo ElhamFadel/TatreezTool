@@ -1,8 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import Sidebar from '@/components/dashboard/Sidebar'
-import DashboardHeader from '@/components/dashboard/DashboardHeader'
+import DashboardShell from '@/components/dashboard/DashboardShell'
 import DesignCard from '@/components/dashboard/DesignCard'
 import EmptyState from '@/components/dashboard/EmptyState'
 import NewDesignButton from '@/components/NewDesignButton'
@@ -26,15 +25,7 @@ export default function DashboardPage() {
 
 
     return (
-        <div className="min-h-screen bg-[#F9F7F4] flex">
-
-            <Sidebar />
-
-            <div className="ml-52 flex-1 flex flex-col">
-
-                <DashboardHeader userInitial={userInitial} communityMember={communityMember} />
-
-                <main className="px-8 py-8">
+        <DashboardShell userInitial={userInitial} communityMember={communityMember}>
 
                     <div className="flex items-center justify-between mb-6">
                         <h1 className="text-lg font-semibold text-[#1A1A1A]">
@@ -80,10 +71,6 @@ export default function DashboardPage() {
                         </div>
                     )}
 
-                </main>
-
-            </div>
-
-        </div>
+        </DashboardShell>
     )
 }
