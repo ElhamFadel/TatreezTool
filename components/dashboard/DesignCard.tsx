@@ -113,6 +113,16 @@ export default function DesignCard({ designName, updatedAt, isShared, onClick, o
                         <button
                             onClick={(e) => {
                                 e.stopPropagation()
+                                onShare()
+                                setMenuOpen(false)
+                            }}
+                            className="w-full text-left text-xs text-[#1A1A1A] px-3 py-2 hover:bg-[#F9F7F4] transition-colors"
+                        >
+                            {isShared ? 'Make private' : 'Share'}
+                        </button>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation()
                                 onDelete()
                                 setMenuOpen(false)
                             }}
