@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import db from '@/lib/db'
-import { id } from '@instantdb/react'
+import { duplicateDesign } from '@/lib/duplicateDesign'
 import Sidebar from '@/components/dashboard/Sidebar'
 import DashboardHeader from '@/components/dashboard/DashboardHeader'
 import { useDashboard } from '@/hooks/useDashboard'
@@ -24,18 +24,7 @@ export default function CommunityPage() {
             router.push('/login')
             return
         }
-        const newId = id()
-        await db.transact(
-            db.tx.desings[newId].update({
-                userId: user.id,
-                designName: `${design.designName} — Copy`,
-                designData: design.designData ?? {},
-                createdAt: Date.now(),
-                updatedAt: Date.now(),
-                isDeleted: false,
-                isShared: false,
-            })
-        )
+        await duplicateDesign(user, design)
         router.push('/dashboard')
     }
 

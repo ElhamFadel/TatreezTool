@@ -1,7 +1,8 @@
 import db from "@/lib/db";
-import { id } from "@instantdb/admin";
+import { id } from "@instantdb/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { duplicateDesign } from "@/lib/duplicateDesign";
 
 type SortOption = 'recent' | 'oldest' | 'az'
 
@@ -61,18 +62,7 @@ export function useDashboard() {
 
     async function handleDuplicate(design: typeof designs[number]) {
         if (!user) return
-        const newId = id()
-        await db.transact(
-            db.tx.desings[newId].update({
-                userId: user.id,
-                designName: `${design.designName} — Copy`,
-                designData: design.designData ?? {},
-                createdAt: Date.now(),
-                updatedAt: Date.now(),
-                isDeleted: false,
-                isShared: false,
-            })
-        )
+        await duplicateDesign(user, design)
     }
 
     const designs = (data?.desings ?? []).slice().sort((a, b) => {
