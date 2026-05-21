@@ -3,8 +3,7 @@
 import { useRouter } from 'next/navigation'
 import db from '@/lib/db'
 import { duplicateDesign } from '@/lib/duplicateDesign'
-import Sidebar from '@/components/dashboard/Sidebar'
-import DashboardHeader from '@/components/dashboard/DashboardHeader'
+import DashboardShell from '@/components/dashboard/DashboardShell'
 import { useDashboard } from '@/hooks/useDashboard'
 import { formatDate } from '@/lib/formatDate'
 
@@ -29,15 +28,7 @@ export default function CommunityPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#F9F7F4] flex">
-
-            <Sidebar />
-
-            <div className="ml-52 flex-1 flex flex-col">
-
-                <DashboardHeader userInitial={userInitial} communityMember={communityMember} />
-
-                <main className="px-8 py-8">
+        <DashboardShell userInitial={userInitial} communityMember={communityMember}>
 
                     <h1 className="text-lg font-semibold text-[#1A1A1A] mb-1">Community</h1>
                     <p className="text-xs text-[#9CA3AF] mb-6">
@@ -74,10 +65,6 @@ export default function CommunityPage() {
                         </div>
                     )}
 
-                </main>
-
-            </div>
-
-        </div>
+        </DashboardShell>
     )
 }
