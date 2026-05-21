@@ -2,12 +2,12 @@
 
 import DashboardShell from '@/components/dashboard/DashboardShell'
 import { useTrash } from '@/hooks/useTrash'
-import { useDashboard } from '@/hooks/useDashboard'
+import { useProfile } from '@/hooks/useProfile'
 import { formatDate } from '@/lib/formatDate'
 
 export default function TrashPage() {
     const { trashedDesigns, handleRestore, handlePermanentDelete } = useTrash()
-    const { communityMember, userInitial } = useDashboard()
+    const { communityMember, userInitial } = useProfile()
 
     return (
         <DashboardShell userInitial={userInitial} communityMember={communityMember}>

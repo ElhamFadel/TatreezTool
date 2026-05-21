@@ -4,12 +4,12 @@ import { useRouter } from 'next/navigation'
 import db from '@/lib/db'
 import { duplicateDesign } from '@/lib/duplicateDesign'
 import DashboardShell from '@/components/dashboard/DashboardShell'
-import { useDashboard } from '@/hooks/useDashboard'
+import { useProfile } from '@/hooks/useProfile'
 import { formatDate } from '@/lib/formatDate'
 
 export default function CommunityPage() {
     const router = useRouter()
-    const { communityMember, userInitial } = useDashboard()
+    const { communityMember, userInitial } = useProfile()
     const { user } = db.useAuth()
 
     const { data } = db.useQuery({
