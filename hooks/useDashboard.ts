@@ -12,7 +12,7 @@ export function useDashboard() {
     const { user } = db.useAuth();
     const [sortBy, setSortBy] = useState<SortOption>('recent')
     const { communityMember, userInitial } = useProfile()
-    const { data } = db.useQuery(
+    const { data, isLoading } = db.useQuery(
         user ? {
             desings: { $: { where: { userId: user.id, isDeleted: false } } },
         } : null
@@ -76,6 +76,7 @@ export function useDashboard() {
         handleDuplicate,
         handleRenameDesign,
         designs,
+        isLoading,
         sortBy,
         setSortBy,
         communityMember,
